@@ -107,7 +107,8 @@ global $ti_option;
 
                                 // loads and displays fortifications geojson as layer
                                 var fortifications_layer = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/fortifications_de_paris_en_1900.json').addTo(map);
-                                var mapbox_data = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/mapbox.json').addTo(map);
+                                var prison_mazas = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_mazas.json').addTo(map);
+                                var prison_madelonettes = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_madelonettes.json').addTo(map);
                                 var arrondissements = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json').addTo(map);
 
                                 // button fullscreen
@@ -121,7 +122,8 @@ global $ti_option;
                                     // checkboxes
                                     'Fortifications 1900': fortifications_layer,
                                     'arrondissements': arrondissements,
-                                    'mapbox_data': mapbox_data
+                                    'prison_madelonettes': prison_madelonettes,
+                                    'prison_mazas': prison_mazas
                                 }).addTo(map);
                             </script>
 
