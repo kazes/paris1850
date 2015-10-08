@@ -6,10 +6,10 @@
             "properties": {
                 "title": "Prison des Madelonettes",
                 "description": "https://twitter.com/Paris1850/status/644831634416648192\nhttp://vergue.com/post/584/Rue-des-Fontaines",
-                "stroke": "#1087bf",
+                "stroke": "#f5c272",
                 "stroke-width": 4,
                 "stroke-opacity": 1,
-                "fill": "#1087bf",
+                "fill": "#f5c272",
                 "fill-opacity": 0.20000000298023224
             },
             "geometry": {
