@@ -58,6 +58,10 @@ global $ti_option;
                             <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js'></script>
                             <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css' rel='stylesheet' />
 
+
+                            <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+
+
                             <!-- styles-->
                             <style type="text/css">
                                 #map {
@@ -87,10 +91,16 @@ global $ti_option;
                                     <a href="https://twitter.com/cq94/status/610037834167283712" target="_blank">Fortifications de Paris en 1900</a> : par Christian Quest
                                 </li>
                                 <li>
-                                    Prison des Madelonettes
+                                    Prison des Madelonettes (1793-1868)
                                 </li>
                                 <li>
-                                    Prison Mazas
+                                    Prison Mazas (1850-99)
+                                </li>
+                                <li>
+                                    Arrondissements avant 1860 : par le projet <a href="http://alpage.huma-num.fr/fr/frdocumentation/plan-alpage-vasserot" target="_blank">Alpage</a>
+                                </li>
+                                <li>
+                                    Bâti Vasserot (1810-36) : par le projet <a href="http://alpage.huma-num.fr/fr/frdocumentation/plan-alpage-vasserot" target="_blank">Alpage</a>
                                 </li>
                             </ul>
 
@@ -98,7 +108,7 @@ global $ti_option;
                                 var theme_path = '<?php echo get_template_directory_uri(); ?>'; // "http://paris1850.localhost/wp-content/themes/simplemag"
 
                                 L.mapbox.accessToken = 'pk.eyJ1Ijoia2F6ZXMiLCJhIjoiMjBiMDc0M2UzYTdkY2NjZDZjZDVhZDdjYWMxMWU4NGMifQ.UbQyYB-QiEQklqy7AXI4XA';
-                                var mapbox_project_id = 'kazes.bba505ed';
+                                var mapbox_project_id = 'mapbox.streets';
                                 var map = L.mapbox.map('map', mapbox_project_id);
 
                                 // set position to Paris, zoom level 15
@@ -106,10 +116,11 @@ global $ti_option;
 
 
                                 // loads and displays fortifications geojson as layer
-                                var fortifications_layer = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/fortifications_de_paris_en_1900.json').addTo(map);
-                                var prison_mazas = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_mazas.json').addTo(map);
-                                var prison_madelonettes = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_madelonettes.json').addTo(map);
-                                var arrondissements = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json').addTo(map);
+                                // For Geojson export, the target CRS must be EPSG:4326 (in QGIS)
+                                var prison_mazas         = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_mazas.json').addTo(map);
+                                var prison_madelonettes  = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_madelonettes.json').addTo(map);
+                                var arrondissements      = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json').addTo(map);
+                                var fortifications_layer = omnivore.topojson(theme_path + '/geodata/fortifications_de_paris_en_1900.topo.json').addTo(map);
 
                                 // button fullscreen
                                 L.control.fullscreen().addTo(map);
@@ -117,13 +128,14 @@ global $ti_option;
                                 // toggle layers
                                 L.control.layers( {
                                     // radio buttons
-
                                 },{
                                     // checkboxes
+                                    'Satellite': L.mapbox.tileLayer('mapbox.satellite').addTo(map),
+                                    'bati': L.mapbox.tileLayer('kazes.6571f8ff').addTo(map),
                                     'Fortifications 1900': fortifications_layer,
-                                    'arrondissements': arrondissements,
                                     'prison_madelonettes': prison_madelonettes,
-                                    'prison_mazas': prison_mazas
+                                    'prison_mazas': prison_mazas,
+                                    'arrondissements': arrondissements
                                 }).addTo(map);
                             </script>
 
