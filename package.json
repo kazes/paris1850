@@ -1,0 +1,8 @@
+{
+  "name": "paris1850",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-topojson": "^0.1.2"
+  }
+}

@@ -110,9 +110,9 @@ global $ti_option;
 
                                 // loads and displays fortifications geojson as layer
                                 // For Geojson export, the target CRS must be EPSG:4326 (in QGIS)
-                                var prison_mazas         = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_mazas.json').addTo(map);
-                                var prison_madelonettes  = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_madelonettes.json').addTo(map);
-                                var arrondissements      = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json');
+                                var prison_mazas         = omnivore.topojson(theme_path + '/geodata/prison_mazas.topo.json').addTo(map);
+                                var prison_madelonettes  = omnivore.topojson(theme_path + '/geodata/prison_madelonettes.topo.json').addTo(map);
+                                var arrondissements      = omnivore.topojson(theme_path + '/geodata/arrondissements.topo.json');
                                 var fortifications_layer = omnivore.topojson(theme_path + '/geodata/fortifications_de_paris_en_1900.topo.json').addTo(map);
 
                                 // button fullscreen
