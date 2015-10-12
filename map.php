@@ -48,8 +48,6 @@ global $ti_option;
                     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     
                         <div class="page-content">
-                        	<?php // the_content(); ?>
-
                             <!-- START MAP -->
                             <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
                             <link href='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css' rel='stylesheet' />
@@ -58,7 +56,7 @@ global $ti_option;
                             <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js'></script>
                             <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css' rel='stylesheet' />
 
-
+                            <!-- plugin omnivore (to load topojson files) -->
                             <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 
 
@@ -71,21 +69,16 @@ global $ti_option;
                                 }
                             </style>
 
-
                             <h2>
                                 Batiments présents en 1850 (données collectées)
                             </h2>
 
-
-
-                            <!-- map -->
+                            <!-- THE MAP -->
                             <div id="map"></div>
-
 
                             <h2>
                                 Crédits données :
                             </h2>
-
                             <ul>
                                 <li>
                                     <a href="https://twitter.com/cq94/status/610037834167283712" target="_blank">Fortifications de Paris en 1900</a> : par Christian Quest
@@ -119,7 +112,7 @@ global $ti_option;
                                 // For Geojson export, the target CRS must be EPSG:4326 (in QGIS)
                                 var prison_mazas         = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_mazas.json').addTo(map);
                                 var prison_madelonettes  = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/prison_madelonettes.json').addTo(map);
-                                var arrondissements      = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json').addTo(map);
+                                var arrondissements      = L.mapbox.featureLayer().loadURL(theme_path + '/geodata/arrondissements.json');
                                 var fortifications_layer = omnivore.topojson(theme_path + '/geodata/fortifications_de_paris_en_1900.topo.json').addTo(map);
 
                                 // button fullscreen
@@ -128,10 +121,11 @@ global $ti_option;
                                 // toggle layers
                                 L.control.layers( {
                                     // radio buttons
+                                    'Satellite': L.mapbox.tileLayer('mapbox.satellite').addTo(map),
+                                    'streets': L.mapbox.tileLayer('mapbox.streets').addTo(map)
                                 },{
                                     // checkboxes
-                                    'Satellite': L.mapbox.tileLayer('mapbox.satellite').addTo(map),
-                                    'bati': L.mapbox.tileLayer('kazes.6571f8ff').addTo(map),
+                                    'bati (zoom requis)': L.mapbox.tileLayer('kazes.6571f8ff'),
                                     'Fortifications 1900': fortifications_layer,
                                     'prison_madelonettes': prison_madelonettes,
                                     'prison_mazas': prison_mazas,
