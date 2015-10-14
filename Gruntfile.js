@@ -6,14 +6,21 @@ module.exports = function(grunt) {
 
         topojson: {
             world: {
-                options: {},
-                files: {
-                    'geodata/arrondissements.topo.json':['geodata/arrondissements.json'],
-                    'geodata/bati_vasserot.topo.json':['geodata/bati_vasserot.json'],
-                    'geodata/fortifications_de_paris_en_1900.topo.json':['geodata/fortifications_de_paris_en_1900.json'],
-                    'geodata/prison_madelonettes.topo.json':['geodata/prison_madelonettes.json'],
-                    'geodata/prison_mazas.topo.json':['geodata/prison_mazas.json']
-                }
+                options: {
+
+                    //idProperty: ["ID_ALPAGE","NUM_ARROND"],
+                    copyProperties:null
+                    //copyProperties:'undefined' // keep properties (data)
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'geodata',
+                        src: ['*.json'],
+                        dest: 'geodata/topo',
+                        ext: '.topo.json'
+                    }
+                ]
             }
         }
 

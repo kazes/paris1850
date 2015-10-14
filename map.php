@@ -59,7 +59,6 @@ global $ti_option;
                             <!-- plugin omnivore (to load topojson files) -->
                             <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 
-
                             <!-- styles-->
                             <style type="text/css">
                                 #map {
@@ -98,22 +97,26 @@ global $ti_option;
                             </ul>
 
                             <script>
-                                var theme_path = '<?php echo get_template_directory_uri(); ?>'; // "http://paris1850.localhost/wp-content/themes/simplemag"
+                                // "http://paris1850.localhost/wp-content/themes/simplemag"
+                                var theme_path = '<?php echo get_template_directory_uri(); ?>';
+                                var topo_path = theme_path + '/geodata/topo/';
 
                                 L.mapbox.accessToken = 'pk.eyJ1Ijoia2F6ZXMiLCJhIjoiMjBiMDc0M2UzYTdkY2NjZDZjZDVhZDdjYWMxMWU4NGMifQ.UbQyYB-QiEQklqy7AXI4XA';
-                                var mapbox_project_id = 'mapbox.streets';
-                                var map = L.mapbox.map('map', mapbox_project_id);
+                                var default_baselayer = 'mapbox.streets'; // mapbox.streets
+                                var map = L.mapbox.map('map', default_baselayer);
 
                                 // set position to Paris, zoom level 15
-                                map.setView([48.85850346934555, 2.335796356201172], 13);
+                                map.setView([48.85850346934555, 2.335796356201172], 17);
 
-
-                                // loads and displays fortifications geojson as layer
                                 // For Geojson export, the target CRS must be EPSG:4326 (in QGIS)
-                                var prison_mazas         = omnivore.topojson(theme_path + '/geodata/prison_mazas.topo.json').addTo(map);
-                                var prison_madelonettes  = omnivore.topojson(theme_path + '/geodata/prison_madelonettes.topo.json').addTo(map);
-                                var arrondissements      = omnivore.topojson(theme_path + '/geodata/arrondissements.topo.json');
-                                var fortifications_layer = omnivore.topojson(theme_path + '/geodata/fortifications_de_paris_en_1900.topo.json').addTo(map);
+                                var get_style = L.geoJson(null, {style:  L.mapbox.simplestyle.style});
+
+                                // layers
+                                var prison_mazas         = omnivore.topojson(topo_path + 'prison_mazas.json').addTo(map);
+                                var prison_madelonettes  = omnivore.topojson(topo_path + 'prison_madelonettes.json').addTo(map);
+                                var arrondissements      = omnivore.topojson(topo_path + 'arrondissements.json', null, get_style);
+                                var quartiers            = omnivore.topojson(topo_path + 'quartiers.json', null, get_style);
+                                var fortifications_layer = omnivore.topojson(topo_path + 'fortifications_de_paris_en_1900.json').addTo(map);
 
                                 // button fullscreen
                                 L.control.fullscreen().addTo(map);
@@ -122,15 +125,30 @@ global $ti_option;
                                 L.control.layers( {
                                     // radio buttons
                                     'Satellite': L.mapbox.tileLayer('mapbox.satellite').addTo(map),
-                                    'streets': L.mapbox.tileLayer('mapbox.streets').addTo(map)
+                                    'streets': L.mapbox.tileLayer(default_baselayer).addTo(map)
                                 },{
                                     // checkboxes
-                                    'bati (zoom requis)': L.mapbox.tileLayer('kazes.6571f8ff'),
+                                    'bâti (zoom requis)': L.mapbox.tileLayer('kazes.6571f8ff').addTo(map),
                                     'Fortifications 1900': fortifications_layer,
                                     'prison_madelonettes': prison_madelonettes,
                                     'prison_mazas': prison_mazas,
-                                    'arrondissements': arrondissements
+                                    'arrondissements': arrondissements,
+                                    'quartiers': quartiers
                                 }).addTo(map);
+
+
+                                // on click > popup
+                                var runLayer = quartiers.on('ready', function() {
+
+                                        //map.fitBounds(runLayer.getBounds());
+
+                                        runLayer.eachLayer(function(layer) {
+                                            var properties = layer.feature.properties;
+                                            if(properties.QUARTIER){ // todo : why does it parse "arrondissements" layer as well ??
+                                                layer.bindPopup('<strong>Quartier :</strong> ' + properties.QUARTIER + '<br /><strong>Arrondissement :</strong> ' + properties.ARROND);
+                                            }
+                                        });
+                                    }).addTo(map);
                             </script>
 
 
