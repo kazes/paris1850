@@ -106,7 +106,7 @@ global $ti_option;
                                 var map = L.mapbox.map('map', default_baselayer);
 
                                 // set position to Paris, zoom level 15
-                                map.setView([48.85850346934555, 2.335796356201172], 17);
+                                map.setView([48.86223033731979, 2.3493576049804688], 15);
 
                                 // For Geojson export, the target CRS must be EPSG:4326 (in QGIS)
                                 var get_style = L.geoJson(null, {style:  L.mapbox.simplestyle.style});
@@ -146,9 +146,10 @@ global $ti_option;
                                             var properties = layer.feature.properties;
                                             if(properties.QUARTIER){ // todo : why does it parse "arrondissements" layer as well ??
                                                 layer.bindPopup('<strong>Quartier :</strong> ' + properties.QUARTIER + '<br /><strong>Arrondissement :</strong> ' + properties.ARROND);
+
                                             }
                                         });
-                                    }).addTo(map);
+                                    });
                             </script>
 
 
