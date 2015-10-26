@@ -89,6 +89,9 @@ global $ti_option;
                                     Prison Mazas (1850-99)
                                 </li>
                                 <li>
+                                    Prison de l'Abbaye (1522-1854)
+                                </li>
+                                <li>
                                     Arrondissements avant 1860 : par le projet <a href="http://alpage.huma-num.fr/fr/frdocumentation/plan-alpage-vasserot" target="_blank">Alpage</a>
                                 </li>
                                 <li>
@@ -114,9 +117,12 @@ global $ti_option;
                                 // layers
                                 var prison_mazas         = omnivore.topojson(topo_path + 'prison_mazas.json').addTo(map);
                                 var prison_madelonettes  = omnivore.topojson(topo_path + 'prison_madelonettes.json').addTo(map);
+                                var prison_abbaye        = omnivore.topojson(topo_path + 'prison_abbaye.json').addTo(map);
                                 var arrondissements      = omnivore.topojson(topo_path + 'arrondissements.json', null, get_style);
                                 var quartiers            = omnivore.topojson(topo_path + 'quartiers.json', null, get_style);
                                 var fortifications_layer = omnivore.topojson(topo_path + 'fortifications_de_paris_en_1900.json').addTo(map);
+
+                                // todo : convert to topojson : got into geodata/ type "bash convert-topojson.sh" and hit enter
 
                                 // button fullscreen
                                 L.control.fullscreen().addTo(map);
@@ -130,6 +136,7 @@ global $ti_option;
                                     // checkboxes
                                     'bâti (zoom requis)': L.mapbox.tileLayer('kazes.6571f8ff').addTo(map),
                                     'Fortifications 1900': fortifications_layer,
+                                    'prison_abbaye': prison_abbaye,
                                     'prison_madelonettes': prison_madelonettes,
                                     'prison_mazas': prison_mazas,
                                     'arrondissements': arrondissements,
