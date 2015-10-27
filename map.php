@@ -119,6 +119,7 @@ global $ti_option;
                                 var prison_madelonettes  = omnivore.topojson(topo_path + 'prison_madelonettes.json').addTo(map);
                                 var prison_abbaye        = omnivore.topojson(topo_path + 'prison_abbaye.json').addTo(map);
                                 var arrondissements      = omnivore.topojson(topo_path + 'arrondissements.json', null, get_style);
+                                var abattoirs_montmartre = omnivore.topojson(topo_path + 'abattoirs_montmartre.json').addTo(map);
                                 var quartiers            = omnivore.topojson(topo_path + 'quartiers.json', null, get_style);
                                 var fortifications_layer = omnivore.topojson(topo_path + 'fortifications_de_paris_en_1900.json').addTo(map);
 
@@ -140,6 +141,7 @@ global $ti_option;
                                     'prison_madelonettes': prison_madelonettes,
                                     'prison_mazas': prison_mazas,
                                     'arrondissements': arrondissements,
+                                    'abattoirs_montmartre': abattoirs_montmartre,
                                     'quartiers': quartiers
                                 }).addTo(map);
 
