@@ -102,10 +102,6 @@ global $ti_option;
                                 }
                             </style>
 
-                            <h2>
-                                Bâti actuel construit avant 1851
-                            </h2>
-
                             <h3>Que reste-t-il de cette époque dans la rue ?</h3>
 
                             <p>
