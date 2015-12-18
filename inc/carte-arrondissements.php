@@ -8,6 +8,8 @@
         margin-top: 40px;
         margin-bottom: 40px;
     }
+
+    /* MENU */
     #menu {
         background: #fff;
         position: absolute;
@@ -15,7 +17,7 @@
         top: 10px;
         right: 10px;
         border-radius: 3px;
-        width: 120px;
+        width: 200px;
         border: 1px solid rgba(0,0,0,0.4);
         font-family: 'Open Sans', sans-serif;
     }
@@ -49,16 +51,6 @@
     #menu a.active:hover {
         background: #3074a4;
     }
-    /*#tooltip {
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        background: white;
-        width: 200px;
-        min-height: 30px;
-        box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
-        padding: 10px;
-    }*/
 </style>
 
 <!-- THE MAP -->
@@ -76,7 +68,8 @@
         style: 'mapbox://styles/kazes/cihqcntjf004rbnm3br7uogd4',
         center: [2.338027954103012, 48.85906816414709],
         zoom: 12, // starting zoom
-        minZoom: 11
+        minZoom: 11,
+        maxZoom:18
     });
 
     var colors = ['#b7bbf9', '#dcc36a', '#dcc3f2', '#cafaf8', '#fbfad1', '#fbb9b6', '#cbb9c9', '#cbd6c9', '#facaf7', '#facac9', '#c3fbc5', '#faf1ef'];
@@ -135,7 +128,6 @@
             e.preventDefault();
             e.stopPropagation();
 
-            console.time('toto')
 
             var visibility;
             if(id == 'quartiers'){
@@ -143,7 +135,6 @@
                     var id_arrond = 'arrond-' + i;
                     var id_quartiers = 'quartiers-arrond-' + i;
                     visibility = map.getLayoutProperty(id_arrond, 'visibility');
-
                     map.setLayoutProperty(id_arrond, 'visibility', (visibility === 'visible') ? 'none' : 'visible');
                     map.setLayoutProperty(id_quartiers, 'visibility', (visibility === 'visible') ? 'none' : 'visible');
                 }
@@ -153,7 +144,6 @@
                 map.setLayoutProperty(id, 'visibility', (visibility === 'visible') ? 'none' : 'visible');
             }
             this.className = (visibility === 'visible') ? '' : 'active';
-            console.timeEnd('toto')
         };
 
         var layers = document.getElementById('menu');
